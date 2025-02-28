@@ -1,0 +1,9 @@
+game/build/
+
+game/lib/
+
+game/include/
+
+src
+
+!game/src/
