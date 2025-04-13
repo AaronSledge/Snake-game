@@ -3,9 +3,16 @@
 #include <iostream>
 
 
-void updateGame(Snake &snake, bool gameOver, bool pause, int &xpos, int &ypos) {
+void updateGame(Snake &snake, bool gameOver, bool &pause, int &xpos, int &ypos) {
 
     if(!gameOver) {
+        int key = GetCharPressed();
+        if(key == 80 || key == 112) {
+            pause  = true;
+        }
+        else if(pause == true && key == 101) {
+            pause = false;
+        }
         if(!pause) {
             if(IsKeyPressed(KEY_RIGHT)) {
                 xpos = 5;
@@ -37,14 +44,22 @@ void updateGame(Snake &snake, bool gameOver, bool pause, int &xpos, int &ypos) {
 
 void DrawBoard(Snake &snake, bool gameOver, bool pause) {
     if(!gameOver) {
-        if(!pause) {
-            BeginDrawing();
+        BeginDrawing();
+            
+            if(!pause) {
                 ClearBackground(RAYWHITE);
                 DrawRectangle(snake.position.x, snake.position.y, snake.size.x, snake.size.y, GREEN);
-            EndDrawing();
-        }
+            }
+            else {
+                ClearBackground(RAYWHITE);
+                DrawRectangle(snake.position.x, snake.position.y, snake.size.x, snake.size.y, GREEN);
+                DrawText("PAUSED: Press e to continue", 80, 250, 50, RED);
+            }
+            
+        EndDrawing();
     }
 }
+
 
 
 int main() {
